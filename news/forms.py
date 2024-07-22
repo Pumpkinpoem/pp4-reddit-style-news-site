@@ -20,3 +20,13 @@ class CustomSignupForm(SignupForm):
         user.email = self.cleaned_data['email']
         user.save()
         return user
+
+
+class ChangeUsernameForm(forms.Form):
+    username = forms.CharField(max_length=30, label='New Username')
+
+class ChangeEmailForm(forms.Form):
+    email = forms.EmailField(max_length=30, label='New Email')
+
+class DeleteAccountForm(forms.Form):
+    confirm = forms.BooleanField(label='I confirm that I want to delete my account')

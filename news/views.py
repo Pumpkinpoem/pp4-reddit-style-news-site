@@ -26,11 +26,20 @@ def create_post(request):
         form = PostForm()
     return render(request, 'news/create_post.html', {'form': form})
 
-# user account
+
+# account profile
+
+@login_required
+def account_profile(request):
+    return render(request, 'news/account_profile.html')
+
+# user account settings
 
 @login_required
 def account_settings(request):
     return render(request, 'news/account_settings.html')
+
+#user account functions
 
 @login_required
 def change_password(request):

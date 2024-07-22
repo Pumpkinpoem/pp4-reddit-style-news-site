@@ -1,0 +1,10 @@
+{% extends "news/base_generic.html" %}
+
+{% block title %}Account Profile{% endblock %}
+
+{% block content %}
+<h2>Account Profile</h2>
+<p>Username: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p><a href="{% url 'account_settings' %}">Account Settings</a></p>
+{% endblock %}

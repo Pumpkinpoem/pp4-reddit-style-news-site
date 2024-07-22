@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
     '8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net',
     '.herokuapp.com',
     ]
-
+CSRF_TRUSTED_ORIGINS = ['https://8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net']
 
 # Application definition
 
@@ -153,10 +153,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Cloudinary
 
 CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')

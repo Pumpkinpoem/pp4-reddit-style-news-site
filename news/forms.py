@@ -1,9 +1,12 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 from django_summernote.widgets import SummernoteWidget
 from django.contrib.auth.models import User
 from allauth.account.forms import SignupForm
 from django.contrib.auth.forms import UserChangeForm
+
+
+#post form
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -12,6 +15,8 @@ class PostForm(forms.ModelForm):
         widgets = {
             'content': SummernoteWidget(),
         }
+
+# account management
 
 class CustomSignupForm(SignupForm):
     username = forms.CharField(max_length=30, label='Username')
@@ -51,3 +56,11 @@ class ChangeEmailForm(forms.ModelForm):
 
 class DeleteAccountForm(forms.Form):
     confirm = forms.BooleanField(label='I confirm that I want to delete my account')
+
+
+# Comment form
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']

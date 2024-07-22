@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm
-from .models import Post
-from .forms import PostForm
+from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm, PostForm, CommentForm
+from .models import Post, Comment
 from django.db.models import Count
 
 
@@ -38,11 +37,49 @@ def create_post(request):
     return render(request, 'news/create_post.html', {'form': form})
 
 
-# post detail slug
+# post detail slug, comment
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request, 'news/post_detail.html', {'post': post})
+    comments = post.comments.all()
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('account_login')
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('post_detail', slug=post.slug)
+    else:
+        form = CommentForm()
+    return render(request, 'news/post_detail.html', {'post': post, 'comments': comments, 'form': form})
+
+@login_required
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user != comment.author:
+        return redirect('post_detail', slug=comment.post.slug)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', slug=comment.post.slug)
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, 'news/edit_comment.html', {'form': form, 'comment': comment})
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user != comment.author:
+        return redirect('post_detail', slug=comment.post.slug)
+    if request.method == 'POST':
+        post_slug = comment.post.slug
+        comment.delete()
+        return redirect('post_detail', slug=post_slug)
+    return render(request, 'news/delete_comment.html', {'comment': comment})
 
 # account profile
 

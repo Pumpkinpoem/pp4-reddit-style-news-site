@@ -6,6 +6,15 @@ from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm
 from .models import Post
 from .forms import PostForm
 
+
+
+# index
+
+def index(request):
+    posts = Post.objects.all()
+    return render(request, '/news/base_generic.html', {'posts': posts})
+
+
 #Post
 
 def index(request):

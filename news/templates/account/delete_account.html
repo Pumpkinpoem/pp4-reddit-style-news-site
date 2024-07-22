@@ -1,11 +1,12 @@
-{% extends "base_generic.html" %}
-{% load crispy_forms_tags %}
+{% extends "news/base_generic.html" %}
+
+{% block title %}Delete Account{% endblock %}
 
 {% block content %}
-<h2>Delete Account</h2>
+<h1>Delete Account</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ form.as_p }}
     <button type="submit">Delete Account</button>
 </form>
 {% endblock %}

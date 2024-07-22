@@ -29,6 +29,10 @@ def create_post(request):
 # user account
 
 @login_required
+def account_settings(request):
+    return render(request, 'news/account_settings.html')
+
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)

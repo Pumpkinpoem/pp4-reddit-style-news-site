@@ -1,0 +1,17 @@
+{% extends "news/base_generic.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Account Settings{% endblock %}
+
+{% block content %}
+<h2>Account Settings</h2>
+
+<h3><a href="{% url 'change_email' %}">Change Email</a></h3>
+
+<h3><a href="{% url 'change_password' %}">Change Password</a></h3>
+
+<h3><a href="{% url 'change_username' %}">Change Username</a></h3>
+
+<h3><a href="{% url 'delete_account' %}">Delete Account</a></h3>
+
+{% endblock %}

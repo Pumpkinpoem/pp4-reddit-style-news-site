@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -19,7 +19,7 @@ def index(request):
         posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments', '-created_at')
     elif sort_by == 'category':
         posts = Post.objects.order_by('category', '-created_at')
-    else:  # Default sorting by time
+    else:
         posts = Post.objects.order_by('-created_at')
 
     return render(request, 'news/index.html', {'posts': posts})
@@ -37,6 +37,12 @@ def create_post(request):
         form = PostForm()
     return render(request, 'news/create_post.html', {'form': form})
 
+
+# post detail slug
+
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    return render(request, 'news/post_detail.html', {'post': post})
 
 # account profile
 

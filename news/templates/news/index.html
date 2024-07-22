@@ -12,7 +12,7 @@
 <ul>
     {% for post in posts %}
     <li>
-        <h2>{{ post.title }}</h2>
+        <h2><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</h2>
         <p>by {{ post.author }} on {{ post.created_at }}</p>
         <div>{{ post.content|safe }}</div>
         {% if post.image %}

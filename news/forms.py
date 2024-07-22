@@ -1,5 +1,6 @@
 from django import forms
 from .models import Post
+from django_summernote.widgets import SummernoteWidget
 from django.contrib.auth.models import User
 from allauth.account.forms import SignupForm
 from django.contrib.auth.forms import UserChangeForm
@@ -8,6 +9,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content']
+        widgets = {
+            'content': SummernoteWidget(),
+        }
 
 class CustomSignupForm(SignupForm):
     username = forms.CharField(max_length=30, label='Username')

@@ -59,6 +59,14 @@ INSTALLED_APPS = [
     'news'
 ]
 
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    'summernote': {
+        'width': '100%',
+        'height': '480',
+    },
+}
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
@@ -170,3 +178,4 @@ CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

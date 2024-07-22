@@ -5,12 +5,23 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm
 from .models import Post
 from .forms import PostForm
+from django.db.models import Count
 
 
 #Post
 
 def index(request):
     posts = Post.objects.all()
+    return render(request, 'news/index.html', {'posts': posts})
+    sort_by = request.GET.get('sort_by', 'time')
+
+    if sort_by == 'popularity':
+        posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments', '-created_at')
+    elif sort_by == 'category':
+        posts = Post.objects.order_by('category', '-created_at')
+    else:  # Default sorting by time
+        posts = Post.objects.order_by('-created_at')
+
     return render(request, 'news/index.html', {'posts': posts})
 
 @login_required

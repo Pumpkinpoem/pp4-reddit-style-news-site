@@ -4,9 +4,24 @@
 
 {% block content %}
 <h1>News</h1>
+<div>
+    <a href="?sort_by=time">Sort by Time</a> |
+    <a href="?sort_by=popularity">Sort by Popularity</a> |
+    <a href="?sort_by=category">Sort by Category</a>
+</div>
 <ul>
     {% for post in posts %}
-        <li>{{ post.title }} by {{ post.author }} on {{ post.created_at }}</li>
+    <li>
+        <h2>{{ post.title }}</h2>
+        <p>by {{ post.author }} on {{ post.created_at }}</p>
+        <div>{{ post.content|safe }}</div>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% endif %}
+        {% if post.link %}
+        <p><a href="{{ post.link }}">Read more</a></p>
+        {% endif %}
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}

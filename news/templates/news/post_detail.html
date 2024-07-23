@@ -5,6 +5,7 @@
 {% block content %}
 <h1>{{ post.title }}</h1>
 <p>by {{ post.author }} on {{ post.created_at }}</p>
+<p>Category: {{ post.category.name }}</p>
 <div>{{ post.content|safe }}</div>
 {% if post.image %}
 <img src="{{ post.image.url }}" alt="{{ post.title }}">

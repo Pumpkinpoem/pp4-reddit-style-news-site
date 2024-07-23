@@ -3,25 +3,30 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm, PostForm, CommentForm
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from django.db.models import Count
 
 
 #Post
 
 def index(request):
-    posts = Post.objects.all()
-    return render(request, 'news/index.html', {'posts': posts})
+    categories = Category.objects.all()
+    category_id = request.GET.get('category')
     sort_by = request.GET.get('sort_by', 'time')
 
-    if sort_by == 'popularity':
-        posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments', '-created_at')
-    elif sort_by == 'category':
-        posts = Post.objects.order_by('category', '-created_at')
+    if category_id:
+        posts = Post.objects.filter(category_id=category_id)
     else:
-        posts = Post.objects.order_by('-created_at')
+        posts = Post.objects.all()
 
-    return render(request, 'news/index.html', {'posts': posts})
+    if sort_by == 'popularity':
+        posts = posts.annotate(num_comments=Count('comment')).order_by('-num_comments', '-created_at')
+    elif sort_by == 'category':
+        posts = posts.order_by('category', '-created_at')
+    else:
+        posts = posts.order_by('-created_at')
+
+    return render(request, 'news/index.html', {'posts': posts, 'categories': categories})
 
 @login_required
 def create_post(request):

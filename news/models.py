@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django_summernote.fields import SummernoteTextField
 
+# catagory
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 
 # post model
 
@@ -17,6 +25,8 @@ class Post(models.Model):
     link = models.URLField(blank=True, null=True)
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     def save(self, *args, **kwargs):
         if not self.slug:

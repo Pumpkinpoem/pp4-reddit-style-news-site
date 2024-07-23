@@ -21,6 +21,10 @@
         {% if post.link %}
         <p><a href="{{ post.link }}">Read more</a></p>
         {% endif %}
+        <div>
+            <a href="{% url 'upvote_post' post.slug %}">Upvote</a> ({{ post.total_upvotes }}) |
+            <a href="{% url 'downvote_post' post.slug %}">Downvote</a> ({{ post.total_downvotes }})
+        </div>
     </li>
     {% endfor %}
 </ul>

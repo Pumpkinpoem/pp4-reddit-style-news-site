@@ -15,11 +15,19 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='news_images/', blank=True, null=True)
     link = models.URLField(blank=True, null=True)
+    upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
+    downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def total_upvotes(self):
+        return self.upvotes.count()
+
+    def total_downvotes(self):
+        return self.downvotes.count()
 
     def __str__(self):
         return self.title

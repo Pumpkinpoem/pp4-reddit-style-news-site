@@ -37,7 +37,7 @@ def create_post(request):
     return render(request, 'news/create_post.html', {'form': form})
 
 
-# post detail slug, comment
+# post detail slug, comment, up/down vote
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -80,6 +80,28 @@ def delete_comment(request, pk):
         comment.delete()
         return redirect('post_detail', slug=post_slug)
     return render(request, 'news/delete_comment.html', {'comment': comment})
+
+@login_required
+def upvote_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user in post.downvotes.all():
+        post.downvotes.remove(request.user)
+    if request.user not in post.upvotes.all():
+        post.upvotes.add(request.user)
+    else:
+        post.upvotes.remove(request.user)
+    return redirect('post_detail', slug=slug)
+
+@login_required
+def downvote_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user in post.upvotes.all():
+        post.upvotes.remove(request.user)
+    if request.user not in post.downvotes.all():
+        post.downvotes.add(request.user)
+    else:
+        post.downvotes.remove(request.user)
+    return redirect('post_detail', slug=slug)
 
 # account profile
 

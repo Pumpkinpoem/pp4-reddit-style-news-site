@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
     path('comment/<int:pk>/delete/', views.delete_comment, name='delete_comment'),
     path('post/<slug:slug>/upvote/', views.upvote_post, name='upvote_post'),
     path('post/<slug:slug>/downvote/', views.downvote_post, name='downvote_post'),
+    path('accounts/', include('allauth.urls')),
 ]

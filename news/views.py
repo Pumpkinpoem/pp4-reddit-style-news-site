@@ -8,6 +8,7 @@ from .models import Post, Comment, Category
 from django.db.models import Count
 
 
+
 #Post
 
 def index(request):

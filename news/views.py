@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm, PostForm, CommentForm
@@ -42,27 +43,39 @@ def create_post(request):
     return render(request, 'news/create_post.html', {'form': form})
 
 @login_required
-def update_post(request, post_slug):
-    post = get_object_or_404(Post, slug=post_slug)
-    if request.user != post.author:
+def edit_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if post.author != request.user:
         return HttpResponseForbidden()
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('post_detail', post_slug=post.slug)
+            return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    return render(request, 'news/update_post.html', {'form': form})
+    return render(request, 'news/post_form.html', {'form': form, 'post': post})
 
 @login_required
-def delete_post_image(request, post_slug):
-    post = get_object_or_404(Post, slug=post_slug)
-    if request.user != post.author:
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if post.author != request.user:
         return HttpResponseForbidden()
-    post.image = None
-    post.save()
-    return redirect('update_post', post_slug=post.slug)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('index')
+    return render(request, 'news/delete_post.html', {'post': post})
+
+@login_required
+def delete_post_image(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if post.author != request.user:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        post.image = None
+        post.save()
+        return redirect('edit_post', slug=post.slug)
+    return render(request, 'news/delete_post_image.html', {'post': post})
 
 
 # post detail slug, comment, up/down vote

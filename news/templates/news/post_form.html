@@ -1,0 +1,19 @@
+{% extends "news/base_generic.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h2>Edit Post</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Save changes</button>
+  </form>
+  <form method="post" action="{% url 'delete_post' post.slug %}">
+    {% csrf_token %}
+    <button type="submit">Delete Post</button>
+  </form>
+  <form method="post" action="{% url 'delete_post_image' post.slug %}">
+    {% csrf_token %}
+    <button type="submit">Delete Image</button>
+  </form>
+{% endblock %}

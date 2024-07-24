@@ -19,6 +19,13 @@
     <a href="{% url 'downvote_post' post.slug %}">Downvote</a> ({{ post.total_downvotes }})
 </div>
 
+{% if user == post.author %}
+<div>
+    <a href="{% url 'edit_post' post.slug %}">Edit Post</a>
+    <a href="{% url 'delete_post' post.slug %}">Delete Post</a>
+</div>
+{% endif %}
+
 <h2>Comments</h2>
 <ul>
     {% for comment in comments %}

@@ -4,6 +4,9 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('create/', views.create_post, name='create_post'),
+    path('post/<slug:slug>/edit/', views.edit_post, name='edit_post'),
+    path('post/<slug:slug>/delete/', views.delete_post, name='delete_post'),
+    path('post/<slug:slug>/delete_image/', views.delete_post_image, name='delete_post_image'),
     path('change_password/', views.change_password, name='change_password'),
     path('change_username/', views.change_username, name='change_username'),
     path('change_email/', views.change_email, name='change_email'),
@@ -15,6 +18,4 @@ urlpatterns = [
     path('comment/<int:pk>/delete/', views.delete_comment, name='delete_comment'),
     path('post/<slug:slug>/upvote/', views.upvote_post, name='upvote_post'),
     path('post/<slug:slug>/downvote/', views.downvote_post, name='downvote_post'),
-    path('post/<slug:post_slug>/edit/', views.update_post, name='update_post'),
-    path('post/<slug:post_slug>/delete_image/', views.delete_post_image, name='delete_post_image')
 ]

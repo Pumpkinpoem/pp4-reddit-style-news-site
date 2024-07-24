@@ -24,4 +24,4 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('accounts/', include('allauth.urls')),
     path('summernote/', include('django_summernote.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

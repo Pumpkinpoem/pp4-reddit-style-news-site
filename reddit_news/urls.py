@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from news import views as news_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
      path('', news_views.index, name='home'),

@@ -36,8 +36,7 @@ def create_post(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            form.save_m2m()
-            return redirect('post_detail', post_slug=post.slug)
+            return redirect('index')
     else:
         form = PostForm()
     return render(request, 'news/create_post.html', {'form': form})

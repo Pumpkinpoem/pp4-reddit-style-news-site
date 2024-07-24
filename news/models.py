@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django_summernote.fields import SummernoteTextField
+from cloudinary.models import CloudinaryField
 
 # catagory
 
@@ -21,7 +22,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='news_images/', blank=True, null=True)
+    image = CloudinaryField('image', blank=True, null=True)
     link = models.URLField(blank=True, null=True)
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)

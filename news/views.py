@@ -31,15 +31,39 @@ def index(request):
 @login_required
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return redirect('index')
+            form.save_m2m()
+            return redirect('post_detail', post_slug=post.slug)
     else:
         form = PostForm()
     return render(request, 'news/create_post.html', {'form': form})
+
+@login_required
+def update_post(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    if request.user != post.author:
+        return HttpResponseForbidden()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', post_slug=post.slug)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'news/update_post.html', {'form': form})
+
+@login_required
+def delete_post_image(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    if request.user != post.author:
+        return HttpResponseForbidden()
+    post.image = None
+    post.save()
+    return redirect('update_post', post_slug=post.slug)
 
 
 # post detail slug, comment, up/down vote

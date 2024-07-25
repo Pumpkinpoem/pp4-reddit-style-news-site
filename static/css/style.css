@@ -48,8 +48,15 @@ nav a:hover {
     margin: 0 auto;
 }
 
+/* Container for the main content and sidebar */
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Sidebar styling */
 .sidebar {
+    width: 25%;
     flex: 1;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
@@ -92,6 +99,11 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
+.main-content {
+    width: 70%;
+}
+
 /* Post styling */
 .post {
     margin-bottom: 20px;
@@ -109,6 +121,13 @@ main {
 
 .post p {
     margin-bottom: 10px;
+}
+
+.post img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
 }
 
 /* Button styling */

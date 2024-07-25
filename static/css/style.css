@@ -102,12 +102,13 @@ nav a:hover {
 /* Main content styling */
 main {
     flex: 3;
-    max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 100%;
 }
 
 
@@ -140,6 +141,15 @@ main {
     height: auto;
     display: block;
     margin: 0 auto 10px;
+}
+
+.post-detail img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
 /* Button styling */

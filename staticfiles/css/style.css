@@ -56,58 +56,59 @@ nav a:hover {
     justify-content: space-between;
 }
 
+
 /* Sidebar styling */
-.sidebar {
+.sidebar, .sidebar-right {
     width: 25%;
-    margin-right: 20px;
     flex: 1;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
     margin-right: 20px;
 }
 
-.sidebar h2 {
+.sidebar-right {
+    margin-left: 20px;
+}
+
+.sidebar h2, .sidebar-right h2 {
     color: #FF6347; /* Warm coral */
     margin-bottom: 10px;
     font-family: 'Georgia', serif;
 }
 
-.sidebar ul {
+.sidebar ul, .sidebar-right ul {
     list-style: none;
 }
 
-.sidebar ul li {
+.sidebar ul li, .sidebar-right ul li {
     margin-bottom: 10px;
 }
 
-.sidebar ul li a {
+.sidebar ul li a, .sidebar-right ul li a {
     color: #5D5C61;
     text-decoration: none;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li a:hover, .sidebar-right ul li a:hover {
     text-decoration: underline;
-}
-
-.sidebar,
-.main-content,
-.latest-news {
-    flex: 1;
-    margin: 10px;
 }
 
 
 /* Main content styling */
 main {
     flex: 3;
-    max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 100%;
 }
 
 
@@ -135,11 +136,14 @@ main {
     margin-bottom: 10px;
 }
 
-.post img {
+
+.post-detail img {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
 /* Button styling */
@@ -224,18 +228,10 @@ li p:last-child {
 /* Responsive design */
 @media (max-width: 1200px) {
     .container {
-        flex-direction: column;
         width: 90%;
     }
 
-    .sidebar {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        width: 100%;
-    }
+  
 }
 
 @media (max-width: 768px) {
@@ -250,6 +246,12 @@ li p:last-child {
 
     .container {
         width: 95%;
+        flex-direction: column;
+    }
+
+    .sidebar, .sidebar-right {
+        width: 100%;
+        margin: 10px 0;
     }
 }
 

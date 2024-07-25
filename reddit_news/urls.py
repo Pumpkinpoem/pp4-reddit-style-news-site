@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-     path('', news_views.index, name='home'),
+    path('', news_views.home, name='home'),
     path('admin/', admin.site.urls),
     path('news/', include('news.urls')),
     path('accounts/', include('allauth.urls')),

@@ -1,53 +1,37 @@
 {% extends 'news/base_generic.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="sidebar">
-        <h3>Latest News</h3>
-        <ul>
-            {% for post in latest_posts %}
-            <li>
-                <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
-                <p>{{ post.created_at }}</p>
-            </li>
+<div>
+    <form method="get">
+        <label for="category">Filter by Category:</label>
+        <select id="category" name="category" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
             {% endfor %}
-        </ul>
-    </div>
+        </select>
 
-    <div class="main-content">
-        <div>
-            <form method="get">
-                <label for="category">Filter by Category:</label>
-                <select id="category" name="category" onchange="this.form.submit()">
-                    <option value="">All Categories</option>
-                    {% for category in categories %}
-                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="sort_by">Sort by:</label>
-                <select id="sort_by" name="sort_by" onchange="this.form.submit()">
-                    <option value="time" {% if request.GET.sort_by == 'time' %}selected{% endif %}>Time</option>
-                    <option value="popularity" {% if request.GET.sort_by == 'popularity' %}selected{% endif %}>Popularity</option>
-                    <option value="category" {% if request.GET.sort_by == 'category' %}selected{% endif %}>Category</option>
-                </select>
-            </form>
-        </div>
-
-        <ul>
-            {% for post in posts %}
-            <li class="post">
-                {% if post.image %}
-                <img src="{{ post.image.url }}" alt="{{ post.title }}">
-                {% endif %}
-                <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
-                <p>{{ post.content|safe|truncatewords:30 }}</p>
-                <p>Category: {{ post.category.name }}</p>
-                <p>Author: {{ post.author.username }}</p>
-                <p>Posted on: {{ post.created_at }}</p>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+        <label for="sort_by">Sort by:</label>
+        <select id="sort_by" name="sort_by" onchange="this.form.submit()">
+            <option value="time" {% if request.GET.sort_by == 'time' %}selected{% endif %}>Time</option>
+            <option value="popularity" {% if request.GET.sort_by == 'popularity' %}selected{% endif %}>Popularity</option>
+            <option value="category" {% if request.GET.sort_by == 'category' %}selected{% endif %}>Category</option>
+        </select>
+    </form>
 </div>
+
+<ul>
+    {% for post in posts %}
+    <li class="post">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% endif %}
+        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+        <p>{{ post.content|safe|truncatewords:30 }}</p>
+        <p>Category: {{ post.category.name }}</p>
+        <p>Author: {{ post.author.username }}</p>
+        <p>Posted on: {{ post.created_at }}</p>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}

@@ -7,8 +7,9 @@ from .forms import ChangeUsernameForm, ChangeEmailForm, DeleteAccountForm, PostF
 from .models import Post, Comment, Category
 from django.db.models import Count
 
-
-
+# Home view
+def home(request):
+    return render(request, 'news/home.html')
 
 # news index
 

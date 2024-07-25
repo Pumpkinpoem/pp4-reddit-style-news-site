@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_summernote',
+    'cloudinary',
     'news'
 ]
 
@@ -176,10 +178,26 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Cloudinary
-
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+
 if CLOUDINARY_URL.startswith('http://'):
     CLOUDINARY_URL = CLOUDINARY_URL.replace('http://', 'https://')
+
+cloudinary.config(
+    cloud_name=CLOUDINARY_URL.split('@')[1].split('?')[0],
+    api_key=CLOUDINARY_URL.split('//')[1].split(':')[0],
+    api_secret=CLOUDINARY_URL.split(':')[2].split('@')[0],
+    secure=True,
+)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': cloudinary.config().cloud_name,
+    'API_KEY': cloudinary.config().api_key,
+    'API_SECRET': cloudinary.config().api_secret,
+    'SECURE': True,
+}
 
 
 # Default primary key field type

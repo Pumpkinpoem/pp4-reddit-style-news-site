@@ -9,7 +9,8 @@ from django.db.models import Count
 
 
 
-#Post
+
+# news index
 
 def index(request):
     categories = Category.objects.all()
@@ -209,3 +210,5 @@ def delete_account(request):
     else:
         form = DeleteAccountForm()
     return render(request, 'account/delete_account.html', {'form': form})
+
+

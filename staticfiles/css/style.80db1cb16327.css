@@ -48,8 +48,6 @@ nav a:hover {
     margin: 0 auto;
 }
 
-
-
 /* Container for the main content and sidebar */
 .container {
     display: flex;
@@ -59,7 +57,6 @@ nav a:hover {
 /* Sidebar styling */
 .sidebar {
     width: 25%;
-    margin-right: 20px;
     flex: 1;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
@@ -91,14 +88,6 @@ nav a:hover {
     text-decoration: underline;
 }
 
-.sidebar,
-.main-content,
-.latest-news {
-    flex: 1;
-    margin: 10px;
-}
-
-
 /* Main content styling */
 main {
     flex: 3;
@@ -113,7 +102,6 @@ main {
 
 .main-content {
     width: 70%;
-    flex: 1;
 }
 
 /* Post styling */
@@ -224,17 +212,7 @@ li p:last-child {
 /* Responsive design */
 @media (max-width: 1200px) {
     .container {
-        flex-direction: column;
         width: 90%;
-    }
-
-    .sidebar {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        width: 100%;
     }
 }
 

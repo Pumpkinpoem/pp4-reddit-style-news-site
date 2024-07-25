@@ -174,9 +174,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Cloudinary
 
 CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+if CLOUDINARY_URL.startswith('http://'):
+    CLOUDINARY_URL = CLOUDINARY_URL.replace('http://', 'https://')
 
 
 # Default primary key field type

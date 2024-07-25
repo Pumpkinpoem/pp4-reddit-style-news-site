@@ -28,8 +28,20 @@
             {% endif %}
         </nav>
     </header>
-    <div>
-        {% block content %}{% endblock %}
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Popular Posts</h2>
+            <ul>
+                {% for post in popular_posts %}
+                <li>
+                    <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
     </div>
 </body>
 

@@ -28,7 +28,9 @@ def index(request):
     else:
         posts = posts.order_by('-created_at')
 
-    return render(request, 'news/index.html', {'posts': posts, 'categories': categories})
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+
+    return render(request, 'news/index.html', {'posts': posts, 'categories': categories, 'popular_posts': popular_posts})
 
 @login_required
 def create_post(request):

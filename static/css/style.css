@@ -41,8 +41,49 @@ nav a:hover {
     color: white;
 }
 
+/* Main container styling */
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Sidebar styling */
+.sidebar {
+    flex: 1;
+    padding: 20px;
+    background-color: #FFF5EE; /* Light peach */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+.sidebar h2 {
+    color: #FF6347; /* Warm coral */
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #5D5C61;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
 /* Main content styling */
 main {
+    flex: 3;
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -89,3 +130,98 @@ button:hover, .button:hover {
 
 
 
+/* Additional styles for forms and layout */
+form {
+    margin: 20px 0;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form select, form input, form textarea, form button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+form button {
+    background-color: #FF6347; /* Warm coral */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #E55347; /* Slightly darker coral */
+}
+
+/* Styling for the preview of news content */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #FFFFFF;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+li a {
+    text-decoration: none;
+    color: #333;
+}
+
+li p {
+    margin-bottom: 10px;
+}
+
+li p:last-child {
+    margin-bottom: 0;
+}
+
+
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        text-align: center;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .container {
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 20px 0;
+    }
+
+    nav a {
+        padding: 10px;
+    }
+
+    form label {
+        margin: 15px 0 5px;
+    }
+}

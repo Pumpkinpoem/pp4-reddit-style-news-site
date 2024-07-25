@@ -46,8 +46,16 @@ nav a:hover {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+
+
+/* Container for the main content and sidebar */
+.container {
+    display: flex;
     justify-content: space-between;
 }
+
 
 /* Sidebar styling */
 .sidebar, .sidebar-right {
@@ -90,13 +98,22 @@ nav a:hover {
     text-decoration: underline;
 }
 
+
 /* Main content styling */
 main {
     flex: 3;
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.main-content {
+    width: 70%;
+    flex: 1;
 }
 
 /* Post styling */
@@ -141,6 +158,8 @@ button, .button {
 button:hover, .button:hover {
     background-color: #E55347; /* Slightly darker coral */
 }
+
+
 
 /* Additional styles for forms and layout */
 form {
@@ -200,11 +219,15 @@ li p:last-child {
     margin-bottom: 0;
 }
 
+
+
 /* Responsive design */
 @media (max-width: 1200px) {
     .container {
         width: 90%;
     }
+
+  
 }
 
 @media (max-width: 768px) {
@@ -219,6 +242,12 @@ li p:last-child {
 
     .container {
         width: 95%;
+        flex-direction: column;
+    }
+
+    .sidebar, .sidebar-right {
+        width: 100%;
+        margin: 10px 0;
     }
 }
 

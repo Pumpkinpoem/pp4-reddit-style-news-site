@@ -5,16 +5,12 @@ from django_summernote.fields import SummernoteTextField
 from cloudinary.models import CloudinaryField
 
 
-# catagory
-
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
-
-# post model
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
@@ -28,7 +24,6 @@ class Post(models.Model):
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -44,7 +39,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-# Comment model
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)

@@ -1,12 +1,11 @@
 from django import forms
-from .models import Post, Comment, Category
-from django_summernote.widgets import SummernoteWidget
 from django.contrib.auth.models import User
-from allauth.account.forms import SignupForm
 from django.contrib.auth.forms import UserChangeForm
+from django_summernote.widgets import SummernoteWidget
+from allauth.account.forms import SignupForm
 
+from .models import Post, Comment
 
-#post form
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -16,7 +15,6 @@ class PostForm(forms.ModelForm):
             'content': SummernoteWidget(),
         }
 
-# account management
 
 class CustomSignupForm(SignupForm):
     username = forms.CharField(max_length=30, label='Username')
@@ -36,12 +34,13 @@ class ChangeUsernameForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username']
-    
+
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Username already exists.")
         return username
+
 
 class ChangeEmailForm(forms.ModelForm):
     class Meta:
@@ -54,11 +53,10 @@ class ChangeEmailForm(forms.ModelForm):
             raise forms.ValidationError("Email already exists.")
         return email
 
+
 class DeleteAccountForm(forms.Form):
     confirm = forms.BooleanField(label='I confirm that I want to delete my account')
 
-
-# Comment form
 
 class CommentForm(forms.ModelForm):
     class Meta:

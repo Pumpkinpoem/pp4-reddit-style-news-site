@@ -1,25 +1,11 @@
   
 # Glad Tidings Times
 
-![Responsive Mockup](assets/readme/responsive.PNG)
+![Responsive Mockup](/static/images/responsive.PNG)
 
 **Glad Tidings Times** is a positive news platform designed to share uplifting and heartwarming stories. In a world filled with negative headlines, this platform aims to bring a smile to your face by focusing on the good news happening around us.
 
-  
 
-## Table of Contents
-
-*   [Glad Tidings Times](#glad-tidings-times)
-*   [Table of Contents](#table-of-contents)
-*   [Project Overview](#project-overview)
-*   [Features](#features)
-*   [Technologies Used](#technologies-used)
-*   [Setup and Installation](#setup-and-installation)
-*   [Usage](#usage)
-*   [Deployment](#deployment)
-*   [Testing](#Testing)
-*   [License](#license)
-*   [Acknowledgements](#acknowledgements)
 
 ## Project Overview
 
@@ -44,88 +30,57 @@
 *   Cloudinary
 *   Summernote
 
-## Setup and Installation
 
 ## Set up Details
 
-  
-
 Install Django and Create a Project and App
-
-  
 
 In the terminal, type the following commands to install a recommended version of Django and the necessary libraries:
 
- 
-  
-
 The images for this project will be hosted by Cloudinary. That requires some libraries to be installed. For that we use the following commands:
-
-  
-
-  
 
 At this stage we can create the requirements.txt file, with the command:
 
-  
-
 pip3 freeze --local > requirements.txt
 
-  
-
 ## Create a new Django project and app:
-
-  
 
 django-admin startproject reddit\_news.
 python3 manage.py startapp news
 
-  
-
 In the “reddit\_news” folder, edit the settings.py to include the new app “news”. It is also necessary to update the setting ALLOWED\_HOSTS.
-
-  
-
 The changes now need to be migrated to the data base:
 
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-  
 
 To run the server simply type on the terminal
 
 python3 manage.py runserver
 
-  
-
 Configure Cloudinary, PostgresSQL and Heroku
 
-  
 
-Cloudinary
+## Cloudinary
 
-  
 
 Login to Cloudinary.com and go to Dashboard.
 
 There, copy the API Environment variable (CLOUDINARY\_URL) and the API Secret Key.
 
-  
 
-PostgreSQL From Code Institute
+## PostgreSQL From Code Institute
 
-  
 
 Open up your provided link crom code institute and follow the instructions,
 
-  
 
 Then copy the PostgreSQL URL, create a env.py and add the copied URL
 
   
 
-env.py and Secret Key
+## env.py and Secret Key
 
   
 
@@ -237,19 +192,38 @@ git push heroku main
 
 ## Lighthouse Testing
 
-![Lighthouse Report](assets/readme/lighthouse.PNG)
+![Lighthouse Report](/static/images/lighthouse%20score.PNG)
 
-## License
+## HTML Validation
+Due to the Django templating language, direct input of the HTML code into the validator was not possible.
 
-This project is licensed under the MIT License.
+## CSS
+
+No errors were found when passing through the official Jigsaw validator.
+ [link to validation](http://jigsaw.w3.org/css-validator/validator?lang=en&profile=css3svg&uri=https%3A%2F%2Fpp4-news-eb7b0cc22f26.herokuapp.com%2F&usermedium=all&vextwarning=&warning=1)
+
+
+## Unresolved Bugs
+
+Side bars dont display most populair news or latest news at this time
 
   
-
 ## Acknowledgements
 
-*   Django documentation
-*   Cloudinary documentation
-*   Heroku documentation
-*   All contributors and users who helped make this project better
+Django documentation
+Cloudinary documentation
+Heroku documentation
+Code Institute
 
-###
+## Credits 
+
+Code cleanup and adjustments were done with assistance from ChatGPT.
+Spelling and grammar fixes were done with ChatGPT.
+
+### Content 
+Icons sourced from [Font Awesome](https://fontawesome.com/).
+
+### Media
+
+Home and sign-up page photos and videos where taken from google
+Favicons obtained from [Favicons.io](https://favicon.io/emoji-favicons/microscope/).

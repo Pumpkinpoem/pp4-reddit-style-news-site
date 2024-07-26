@@ -129,7 +129,7 @@ if os.path.isfile("env.py"):
 
   
 
-## environment variables:
+## environment variables for heroku:
 
   
 
@@ -137,58 +137,23 @@ if os.path.isfile("env.py"):
 *   DATABASE\_URL: The PostgreSQL URL of the instance created for this project.
 *   CLOUDINARY\_URL: The URL for your Cloudinary API.
 
-##   
-
-## Deployment from GitHub:
-
-  
-
-*   In the Heroku dashboard, go to the "Deploy" tab. Scroll down to "Connect to GitHub" and sign in/authorise your GitHub account when prompted.
-*   Then, search for the repository you want to deploy and click "Connect."
-
-## Manual Deployment:
-
-*   After connecting your repository, scroll down to the "Manual deploy" section. Choose the "main" branch (or any other appropriate branch) and click "Deploy" to initiate the deployment process.
-
-
-## Usage
-
-*   Navigate to `http://127.0.0.1:8000` in your web browser.
-*   Register a new user or log in with an existing account.
-*   Explore, create, edit, delete, and interact with posts and comments.
-
-## Deployment
-
-1.  Ensure all dependencies are listed in `requirements.txt`.
-2.  Configure environment variables on the deployment platform (e.g., Heroku).
-3.  Create a `Procfile` for Heroku deployment:
-
-
-web: gunicorn glad\_tidings\_times.wsgi
-
-1.  Deploy the application:
-
-```sh
-Copy code
-git push heroku main
-```
 ## Testing
 
  **Authentication**
-    - Verify that a user can register on the website. - Pass
-    - Verify that a user can log in once registered. - Pass
-    - Verify that a user can sign out successfully. - Pass
-    - Verify that a user can view but not manage posts or comments after signing out. - Pass
- **Booking Forms**
-    - Verify that a new post can be created. - Pass
-    - Verify that a post can be edited. - Pass
-    - Ensure a user can ad an image with the post. - Pass
-    - Verify that a user can successfully delete a bpost. - Pass
-    - Ensure forms cannot be submitted when required fields are empty. - Pass
+Verify that a user can register on the website. - Pass
+Verify that a user can log in once registered. - Pass
+Verify that a user can sign out successfully. - Pass
+Verify that a user can view but not manage posts or comments after signing out. - Pass
+ **posting Forms**
+Verify that a new post can be created. - Pass
+Verify that a post can be edited. - Pass
+Ensure a user can ad an image with the post. - Pass
+Verify that a user can successfully delete a bpost. - Pass
+Ensure forms cannot be submitted when required fields are empty. - Pass
  **Navigation Links**
     
-    Testing was conducted on both mobile and desktop devices to ensure that all navigation links on the respective pages correctly navigated to the designated pages, following the design. This was accomplished by clicking on the navigation links on each page from various devices.
-     Pass
+Testing was conducted on both mobile and desktop devices to ensure that all navigation links on the respective pages correctly navigated to the designated pages, following the design. This was accomplished by clicking on the navigation links on each page from various devices.
+Pass
 
 ## Lighthouse Testing
 
@@ -219,6 +184,7 @@ Code Institute
 
 Code cleanup and adjustments were done with assistance from ChatGPT.
 Spelling and grammar fixes were done with ChatGPT.
+Readme layout about testing taken from [zemaciel ](https://github.com/zemaciel/pp4/blob/main/README.md#testing)
 
 ### Content 
 Icons sourced from [Font Awesome](https://fontawesome.com/).

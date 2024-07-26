@@ -34,12 +34,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 ALLOWED_HOSTS = [
     '8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net',
     '.herokuapp.com',
     ]
-CSRF_TRUSTED_ORIGINS = ['https://8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net']
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net'
+    ]
 
 # Application definition
 
@@ -120,16 +121,28 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+        ),
     },
 ]
 
@@ -148,7 +161,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_UNIQUE_EMAIL = True
-
 
 
 # Internationalization
@@ -173,7 +185,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

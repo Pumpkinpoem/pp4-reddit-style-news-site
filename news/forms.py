@@ -20,7 +20,9 @@ class CustomSignupForm(SignupForm):
     username = forms.CharField(max_length=30, label='Username')
     email = forms.EmailField(max_length=30, label='Email')
     password1 = forms.CharField(widget=forms.PasswordInput, label='Password')
-    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirm Password')
+    password2 = forms.CharField(
+        widget=forms.PasswordInput, label='Confirm Password'
+        )
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
@@ -55,7 +57,7 @@ class ChangeEmailForm(forms.ModelForm):
 
 
 class DeleteAccountForm(forms.Form):
-    confirm = forms.BooleanField(label='I confirm that I want to delete my account')
+    confirm = forms.BooleanField(label='I want to delete my account')
 
 
 class CommentForm(forms.ModelForm):

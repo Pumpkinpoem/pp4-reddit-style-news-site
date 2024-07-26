@@ -1,79 +1,255 @@
-# Reddit-Style News Site
+  
+# Glad Tidings Times
 
-This project is a Reddit-style news website created using Django. Users can create, read, update, and delete posts, and also comment on posts. The project uses MongoDB for data storage and integrates with Heroku for deployment.
+![Responsive Mockup](assets/readme/responsive.PNG)
+
+**Glad Tidings Times** is a positive news platform designed to share uplifting and heartwarming stories. In a world filled with negative headlines, this platform aims to bring a smile to your face by focusing on the good news happening around us.
+
+  
 
 ## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features](#features)
-- [Technologies](#technologies)
-- [Contributing](#contributing)
-- [License](#license)
 
-## Installation
+*   [Glad Tidings Times](#glad-tidings-times)
+*   [Table of Contents](#table-of-contents)
+*   [Project Overview](#project-overview)
+*   [Features](#features)
+*   [Technologies Used](#technologies-used)
+*   [Setup and Installation](#setup-and-installation)
+*   [Usage](#usage)
+*   [Deployment](#deployment)
+*   [Testing](#Testing)
+*   [License](#license)
+*   [Acknowledgements](#acknowledgements)
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/Pumpkinpoem/pp4-reddit-style-news-site.git
-    cd pp4-reddit-style-news-site
-    ```
+## Project Overview
 
-2. Create and activate a virtual environment:
-    ```sh
-    python3 -m venv env
-    source env/bin/activate
-    ```
+**Glad Tidings Times** is a full-stack web application developed to provide users with positive and uplifting news. The goal is to share stories of joy, kindness, and inspiration, creating a refuge from the often overwhelming negative news cycle.
 
-3. Install the dependencies:
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-4. Set up the database:
-    - Make sure MongoDB is installed and running on your machine.
-    - Configure the connection to your MongoDB instance in `reddit_news/settings.py`.
-
-5. Run the migrations:
-    ```sh
-    python manage.py migrate
-    ```
-
-6. Load initial data:
-    ```sh
-    python manage.py loaddata categories.json
-    ```
-
-7. Create a superuser to access the admin panel:
-    ```sh
-    python manage.py createsuperuser
-    ```
-
-8. Start the development server:
-    ```sh
-    python manage.py runserver
-    ```
-
-## Usage
-
-- Access the website at `http://127.0.0.1:8000/`.
-- Log in with your superuser account to create and manage posts and comments.
-- Use the admin panel at `http://127.0.0.1:8000/admin/` for advanced management.
+  
 
 ## Features
 
-- User authentication and authorization
-- Create, read, update, and delete posts
-- Comment on posts
-- Upvote and downvote posts
-- Admin panel for managing content
-- Responsive design
+*   User registration and authentication
+*   Create, edit, and delete posts
+*   Comment on posts
+*   Upvote and downvote posts
+*   User profile management
+*   Role-based access control
 
-## Technologies
+## Technologies Used
 
-- **Backend**: Django, MongoDB
-- **Frontend**: HTML, CSS, JavaScript
-- **Deployment**: Heroku
+*   Django
+*   HTML, CSS, JavaScript
+*   PostgreSQL
+*   Cloudinary
+*   Summernote
+
+## Setup and Installation
+
+## Set up Details
+
+  
+
+Install Django and Create a Project and App
+
+  
+
+In the terminal, type the following commands to install a recommended version of Django and the necessary libraries:
+
+ 
+  
+
+The images for this project will be hosted by Cloudinary. That requires some libraries to be installed. For that we use the following commands:
+
+  
+
+  
+
+At this stage we can create the requirements.txt file, with the command:
+
+  
+
+pip3 freeze --local > requirements.txt
+
+  
+
+## Create a new Django project and app:
+
+  
+
+django-admin startproject reddit\_news.
+python3 manage.py startapp news
+
+  
+
+In the “reddit\_news” folder, edit the settings.py to include the new app “news”. It is also necessary to update the setting ALLOWED\_HOSTS.
+
+  
+
+The changes now need to be migrated to the data base:
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+  
+
+To run the server simply type on the terminal
+
+python3 manage.py runserver
+
+  
+
+Configure Cloudinary, PostgresSQL and Heroku
+
+  
+
+Cloudinary
+
+  
+
+Login to Cloudinary.com and go to Dashboard.
+
+There, copy the API Environment variable (CLOUDINARY\_URL) and the API Secret Key.
+
+  
+
+PostgreSQL From Code Institute
+
+  
+
+Open up your provided link crom code institute and follow the instructions,
+
+  
+
+Then copy the PostgreSQL URL, create a env.py and add the copied URL
+
+  
+
+env.py and Secret Key
+
+  
+
+Create an env.py file, and set it up as the code below. Using the URLs mentioned above and a a “Secret Key” you will create. Below there's a sample how the env.py should look like:
+
+  
+
+import os
+os.environ\["DATABASE\_URL"\] = "postgres://DATA-BASE-URL"
+os.environ\["SECRET\_KEY"\] = "CREATE-YOUR-OWN-KEY"
+os.environ\["CLOUDINARY\_URL"\] = "cloudinary://COUDINARY-ADDRESS"
+
+  
+
+This the same SECRET\_KEY is necessary to update settings.py and Heroku.
+
+  
+
+In the settings.py created by Django, import the env.py file and the Secret key.
+
+  
+
+from pathlib import Path
+import os
+import dj\_database\_url
+
+if os.path.isfile("env.py"):
+    import env
+
+  
+
+# Heroku Deployment
+
+  
+
+## To deploy the site to Heroku, follow these steps:
+
+  
+
+*   Create a Heroku Account.
+*    Create a New App, once you are logged in,click the "New" button located in the top-right corner of the Heroku dashboard. Then, select "Create new app" from the options provided.
+*   Name Your App, enter a unique and meaningful name for your app.
+*   Choose Region and Create App,
+*   select a region that is geographically closer to your target audience. After choosing the region, click "Create app" to set up your new app.
+*   Configure Environment Variables, go to the "Settings" tab, then click "Reveal Config Vars." Here, add the following
+
+  
+
+## environment variables:
+
+  
+
+*   SECRET\_KEY: The same Secret Key in the project's env.py.
+*   DATABASE\_URL: The PostgreSQL URL of the instance created for this project.
+*   CLOUDINARY\_URL: The URL for your Cloudinary API.
+
+##   
+
+## Deployment from GitHub:
+
+  
+
+*   In the Heroku dashboard, go to the "Deploy" tab. Scroll down to "Connect to GitHub" and sign in/authorise your GitHub account when prompted.
+*   Then, search for the repository you want to deploy and click "Connect."
+
+## Manual Deployment:
+
+*   After connecting your repository, scroll down to the "Manual deploy" section. Choose the "main" branch (or any other appropriate branch) and click "Deploy" to initiate the deployment process.
+
+
+## Usage
+
+*   Navigate to `http://127.0.0.1:8000` in your web browser.
+*   Register a new user or log in with an existing account.
+*   Explore, create, edit, delete, and interact with posts and comments.
+
+## Deployment
+
+1.  Ensure all dependencies are listed in `requirements.txt`.
+2.  Configure environment variables on the deployment platform (e.g., Heroku).
+3.  Create a `Procfile` for Heroku deployment:
+
+
+web: gunicorn glad\_tidings\_times.wsgi
+
+1.  Deploy the application:
+
+```sh
+Copy code
+git push heroku main
+```
+## Testing
+
+ **Authentication**
+    - Verify that a user can register on the website. - Pass
+    - Verify that a user can log in once registered. - Pass
+    - Verify that a user can sign out successfully. - Pass
+    - Verify that a user can view but not manage posts or comments after signing out. - Pass
+ **Booking Forms**
+    - Verify that a new post can be created. - Pass
+    - Verify that a post can be edited. - Pass
+    - Ensure a user can ad an image with the post. - Pass
+    - Verify that a user can successfully delete a bpost. - Pass
+    - Ensure forms cannot be submitted when required fields are empty. - Pass
+ **Navigation Links**
+    
+    Testing was conducted on both mobile and desktop devices to ensure that all navigation links on the respective pages correctly navigated to the designated pages, following the design. This was accomplished by clicking on the navigation links on each page from various devices.
+     Pass
+
+## Lighthouse Testing
+
+![Lighthouse Report](assets/readme/lighthouse.PNG)
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the MIT License.
+
+  
+
+## Acknowledgements
+
+*   Django documentation
+*   Cloudinary documentation
+*   Heroku documentation
+*   All contributors and users who helped make this project better
+
+###

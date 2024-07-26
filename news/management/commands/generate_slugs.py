@@ -10,4 +10,5 @@ class Command(BaseCommand):
         for post in posts:
             post.slug = slugify(post.title)
             post.save()
-            self.stdout.write(self.style.SUCCESS(f'Successfully generated slug for post "{post.title}"'))
+            self.stdout.write(
+                self.style.SUCCESS(f'Successfully generated slug for post "{post.title}"'))

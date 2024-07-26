@@ -15,7 +15,8 @@ from .models import Post, Comment, Category
 
 def get_common_context():
     return {
-        'popular_posts': Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5],
+        'popular_posts': Post.objects.annotate(
+            num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5],
         'latest_posts': Post.objects.order_by('-created_at')[:5],
     }
 
@@ -31,13 +32,14 @@ def index(request):
     categories = Category.objects.all()
     category_id = request.GET.get('category')
     sort_by = request.GET.get('sort_by', 'time')
-    
+
     posts = Post.objects.all()
     if category_id:
         posts = posts.filter(category_id=category_id)
 
     if sort_by == 'popularity':
-        posts = posts.annotate(num_comments=Count('comments')).order_by('-num_comments', '-created_at')
+        posts = posts.annotate(num_comments=Count(
+            'comments')).order_by('-num_comments', '-created_at')
     elif sort_by == 'category':
         posts = posts.order_by('category', '-created_at')
     else:
@@ -67,7 +69,7 @@ def create_post(request):
             return redirect('index')
     else:
         form = PostForm()
-    
+
     context = get_common_context()
     context['form'] = form
     return render(request, 'news/create_post.html', context)
@@ -78,7 +80,7 @@ def edit_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if post.author != request.user:
         return HttpResponseForbidden()
-    
+
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
@@ -86,7 +88,7 @@ def edit_post(request, slug):
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    
+
     context = get_common_context()
     context.update({
         'form': form,
@@ -100,11 +102,11 @@ def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if post.author != request.user:
         return HttpResponseForbidden()
-    
+
     if request.method == 'POST':
         post.delete()
         return redirect('index')
-    
+
     context = get_common_context()
     context['post'] = post
     return render(request, 'news/delete_post.html', context)
@@ -115,19 +117,19 @@ def delete_post_image(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if post.author != request.user:
         return HttpResponseForbidden()
-    
+
     if request.method == 'POST':
         post.image = None
         post.save()
         return redirect('edit_post', slug=post.slug)
-    
+
     return render(request, 'news/delete_post_image.html', {'post': post})
 
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     comments = post.comments.all()
-    
+
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('account_login')
@@ -140,7 +142,7 @@ def post_detail(request, slug):
             return redirect('post_detail', slug=post.slug)
     else:
         form = CommentForm()
-    
+
     context = get_common_context()
     context.update({
         'post': post,
@@ -155,7 +157,7 @@ def edit_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.user != comment.author:
         return redirect('post_detail', slug=comment.post.slug)
-    
+
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
@@ -163,7 +165,7 @@ def edit_comment(request, pk):
             return redirect('post_detail', slug=comment.post.slug)
     else:
         form = CommentForm(instance=comment)
-    
+
     context = get_common_context()
     context.update({
         'form': form,
@@ -177,12 +179,12 @@ def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.user != comment.author:
         return redirect('post_detail', slug=comment.post.slug)
-    
+
     if request.method == 'POST':
         post_slug = comment.post.slug
         comment.delete()
         return redirect('post_detail', slug=post_slug)
-    
+
     context = get_common_context()
     context['comment'] = comment
     return render(request, 'news/delete_comment.html', context)

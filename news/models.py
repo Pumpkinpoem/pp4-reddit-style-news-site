@@ -19,11 +19,20 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = CloudinaryField('image', default='placeholder')
+    image = CloudinaryField(
+        'image',
+        default=(
+            'https://res.cloudinary.com/deal48hya/image/upload/'
+            'v1722015477/puzzle-654963_1280_aotr8m.jpg'
+        )
+    )
     link = models.URLField(blank=True, null=True)
-    upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
-    downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    upvotes = models.ManyToManyField(
+        User, related_name='upvoted_posts', blank=True)
+    downvotes = models.ManyToManyField(
+        User, related_name='downvoted_posts', blank=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -41,7 +50,8 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

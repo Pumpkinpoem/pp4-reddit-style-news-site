@@ -13,6 +13,7 @@ body {
     line-height: 1.6;
     padding: 20px;
     overflow-x: hidden;
+    padding-top: 0; /* Remove top padding */
 }
 
 /* Header styling */
@@ -21,6 +22,10 @@ header {
     padding: 10px 0;
     text-align: center;
     border-bottom: 2px solid #5D5C61;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure it stays on top */
+    margin-top: 0; /* Ensure no margin at the top */
 }
 
 header h1 {
@@ -54,7 +59,7 @@ header, .footer {
 /* Footer styling  */
 .footer {
     background-color: #ADD8E6; /* Light baby blue */
-    padding: 10px 0;
+    padding: 5px 0; /* Reduced padding */
     border-top: 2px solid #5D5C61; /* stormy sky blue */
     text-align: center;
     position: fixed;
@@ -89,13 +94,9 @@ header, .footer {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-/* Container for the main content and sidebar */
-.container {
-    display: flex;
     justify-content: space-between;
 }
+
 
 /* Sidebar styling */
 .sidebar, .sidebar-right {
@@ -343,11 +344,6 @@ li p:last-child {
         text-align: center;
     }
 
-    nav a {
-        display: block;
-        margin: 5px 0;
-    }
-
     .container {
         width: 95%;
         flex-direction: column;
@@ -356,6 +352,21 @@ li p:last-child {
     .sidebar, .sidebar-right {
         width: 100%;
         margin: 10px 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar, .sidebar-right, footer {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    main {
+        width: 100%;
+        padding: 10px;
     }
 }
 

@@ -3,53 +3,59 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<div class="post-detail">
-    <h1>{{ post.title }}</h1>
-    <p>by {{ post.author }} on {{ post.created_at }}</p>
-    <p>Category: {{ post.category.name }}</p>
-    {% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}">
-    {% endif %}
-    <div>{{ post.content|safe }}</div>
-    {% if post.link %}
-    <p><a href="{{ post.link }}">Read more</a></p>
-    {% endif %}
+<main role="main">
+    <article class="post-detail" aria-labelledby="post-title">
+        <h1 id="post-title">{{ post.title }}</h1>
+        <p>by {{ post.author }} on {{ post.created_at }}</p>
+        <p>Category: {{ post.category.name }}</p>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% endif %}
+        <div>{{ post.content|safe }}</div>
+        {% if post.link %}
+        <p><a href="{{ post.link }}">Read more</a></p>
+        {% endif %}
 
-    <div>
-        <a href="{% url 'upvote_post' post.slug %}">Upvote</a> ({{ post.total_upvotes }}) |
-        <a href="{% url 'downvote_post' post.slug %}">Downvote</a> ({{ post.total_downvotes }})
-    </div>
+        <div>
+            <a href="{% url 'upvote_post' post.slug %}">Upvote</a> ({{ post.total_upvotes }}) |
+            <a href="{% url 'downvote_post' post.slug %}">Downvote</a> ({{ post.total_downvotes }})
+        </div>
 
-    {% if user == post.author %}
-    <div>
-        <a href="{% url 'edit_post' post.slug %}">Edit Post</a>
-        <a href="{% url 'delete_post' post.slug %}">Delete Post</a>
-    </div>
-    {% endif %}
+        {% if user == post.author %}
+        <div>
+            <a href="{% url 'edit_post' post.slug %}">Edit Post</a>
+            <a href="{% url 'delete_post' post.slug %}">Delete Post</a>
+        </div>
+        {% endif %}
 
-    <h2>Comments</h2>
-    <ul>
-        {% for comment in comments %}
-        <li>
-            <p>{{ comment.content }}</p>
-            <p>by {{ comment.author }} on {{ comment.created_at }}</p>
-            {% if comment.author == user %}
-            <a href="{% url 'edit_comment' comment.pk %}">Edit</a>
-            <a href="{% url 'delete_comment' comment.pk %}">Delete</a>
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
+        <section aria-labelledby="comments-heading">
+            <h2 id="comments-heading">Comments</h2>
+            <ul>
+                {% for comment in comments %}
+                <li>
+                    <p>{{ comment.content }}</p>
+                    <p>by {{ comment.author }} on {{ comment.created_at }}</p>
+                    {% if comment.author == user %}
+                    <a href="{% url 'edit_comment' comment.pk %}">Edit</a>
+                    <a href="{% url 'delete_comment' comment.pk %}">Delete</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
 
-    {% if user.is_authenticated %}
-    <h3>Leave a comment</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Post Comment</button>
-    </form>
-    {% else %}
-    <p>You must be <a href="{% url 'account_login' %}">logged in</a> to post a comment.</p>
-    {% endif %}
-</div>
+        {% if user.is_authenticated %}
+        <section aria-labelledby="leave-comment-heading">
+            <h3 id="leave-comment-heading">Leave a comment</h3>
+            <form method="post" aria-describedby="leave-comment-heading">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Post Comment</button>
+            </form>
+        </section>
+        {% else %}
+        <p>You must be <a href="{% url 'account_login' %}">logged in</a> to post a comment.</p>
+        {% endif %}
+    </article>
+</main>
 {% endblock %}

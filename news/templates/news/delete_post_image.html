@@ -1,11 +1,13 @@
 {% extends "news/base_generic.html" %}
 
 {% block content %}
-  <h2>Delete Image</h2>
-  <p>Are you sure you want to delete the image for "{{ post.title }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, delete image</button>
-    <a href="{% url 'edit_post' post.slug %}">Cancel</a>
-  </form>
+  <main role="main">
+    <h2 id="delete-image-heading">Delete Image</h2>
+    <p>Are you sure you want to delete the image for "{{ post.title }}"?</p>
+    <form method="post" aria-labelledby="delete-image-heading">
+      {% csrf_token %}
+      <button type="submit">Yes, delete image</button>
+      <a href="{% url 'edit_post' post.slug %}">Cancel</a>
+    </form>
+  </main>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
@@ -29,9 +30,15 @@ def index(request):
         posts = posts.order_by('category', '-created_at')
     else:
         posts = posts.order_by('-created_at')
+
+
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
     latest_posts = Post.objects.order_by('-created_at')[:5]
-    return render(request, 'news/index.html', {'posts': posts, 'categories': categories, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
+    return render(request, 'news/index.html', {'posts': posts, 'categories': categories, 'popular_posts': popular_posts, 'latest_posts': latest_posts, 'page_obj': page_obj,})
 
 @login_required
 def create_post(request):

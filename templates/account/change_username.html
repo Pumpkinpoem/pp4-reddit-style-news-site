@@ -3,10 +3,12 @@
 {% block title %}Change Username{% endblock %}
 
 {% block content %}
-<h1>Change Username</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Change Username</button>
-</form>
+<main role="main">
+    <h1 id="change-username-heading">Change Username</h1>
+    <form method="post" aria-labelledby="change-username-heading">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Change Username</button>
+    </form>
+</main>
 {% endblock %}

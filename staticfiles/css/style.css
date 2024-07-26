@@ -12,6 +12,7 @@ body {
     color: #5D5C61; /* stormy sky blue */
     line-height: 1.6;
     padding: 20px;
+    overflow-x: hidden;
 }
 
 /* Header styling */
@@ -41,6 +42,15 @@ nav a:hover {
     color: white;
 }
 
+/* Navigation styling */
+header, .footer {
+    background-color: #ADD8E6; /* Light baby blue */
+    padding: 10px;
+    border-radius: 10px; /* Rounded corners */
+    width: 100%;
+    box-sizing: border-box;
+}
+
 /* Footer styling  */
 .footer {
     background-color: #ADD8E6; /* Light baby blue */
@@ -48,9 +58,9 @@ nav a:hover {
     border-top: 2px solid #5D5C61; /* stormy sky blue */
     text-align: center;
     position: fixed;
-    width: 100%;
-    bottom: 0;
-    left: 0;
+    width: calc(100% - 40px);
+    inset: auto 0 0 0;
+    margin: 0 auto;
 }
 
 .footer .social-links {
@@ -58,7 +68,7 @@ nav a:hover {
 }
 
 .footer .social-links a {
-    color: #5D5C61; /* stormy sky blue */
+    color: #FF6347; /* Warm coral */
     margin: 0 10px;
     font-size: 24px;
     transition: color 0.3s;
@@ -187,7 +197,7 @@ main {
     padding: 15px;
     background-color: #FFFFFF;
     border-radius: 5px;
-    border: 1px solid #5D5C61;
+    border: 1px solid #5D5C61; /* stormy sky blue */
 }
 
 .post h2 {
@@ -291,6 +301,36 @@ li p:last-child {
     margin-bottom: 0;
 }
 
+/* Basic pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.pagination a {
+    color: #5D5C61; /* stormy sky blue */
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 0 4px;
+    border: 1px solid #5D5C61;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #FF6347; /* Warm coral */
+    color: white;
+}
+
+.current {
+    padding: 8px 16px;
+    border: 1px solid #5D5C61; /* stormy sky blue */
+    border-radius: 4px;
+    background-color: #FF6347; /* Warm coral */
+    color: white;
+    margin: 0 4px;
+}
+
 /* Responsive design */
 @media (max-width: 1200px) {
     .container {
@@ -331,44 +371,4 @@ li p:last-child {
     form label {
         margin: 15px 0 5px;
     }
-}
-
-/* Footer Alignment with Nav */
-.footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-}
-
-.footer .footer-container {
-    max-width: 1200px; /* Match main container width */
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer .social-links {
-    margin-bottom: 10px;
-}
-
-.footer .social-links a {
-    color: #fff;
-    margin: 0 10px;
-    font-size: 24px;
-    transition: color 0.3s;
-}
-
-.footer .social-links a:hover {
-    color: #f9a825;
-}
-
-.footer p {
-    margin: 0;
 }

@@ -3,10 +3,12 @@
 {% block title %}Delete Account{% endblock %}
 
 {% block content %}
-<h1>Delete Account</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Delete Account</button>
-</form>
+<main role="main">
+    <h1 id="delete-account-heading">Delete Account</h1>
+    <form method="post" aria-labelledby="delete-account-heading">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Delete Account</button>
+    </form>
+</main>
 {% endblock %}

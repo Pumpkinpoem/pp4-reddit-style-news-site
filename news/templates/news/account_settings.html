@@ -4,14 +4,17 @@
 {% block title %}Account Settings{% endblock %}
 
 {% block content %}
-<h2>Account Settings</h2>
-
-<h3><a href="{% url 'change_email' %}">Change Email</a></h3>
-
-<h3><a href="{% url 'change_password' %}">Change Password</a></h3>
-
-<h3><a href="{% url 'change_username' %}">Change Username</a></h3>
-
-<h3><a href="{% url 'delete_account' %}">Delete Account</a></h3>
-
+<main role="main">
+    <h2>Account Settings</h2>
+    
+    <nav aria-labelledby="account-settings-options">
+        <h3 id="account-settings-options">Options</h3>
+        <ul>
+            <li><a href="{% url 'change_email' %}">Change Email</a></li>
+            <li><a href="{% url 'change_password' %}">Change Password</a></li>
+            <li><a href="{% url 'change_username' %}">Change Username</a></li>
+            <li><a href="{% url 'delete_account' %}">Delete Account</a></li>
+        </ul>
+    </nav>
+</main>
 {% endblock %}

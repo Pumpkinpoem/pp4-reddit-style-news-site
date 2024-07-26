@@ -4,10 +4,12 @@
 {% block title %}Edit Comment{% endblock %}
 
 {% block content %}
-<h2>Edit Comment</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit">Save Changes</button>
-</form>
+  <main role="main">
+    <h2 id="edit-comment-heading">Edit Comment</h2>
+    <form method="post" aria-labelledby="edit-comment-heading">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">Save Changes</button>
+    </form>
+  </main>
 {% endblock %}

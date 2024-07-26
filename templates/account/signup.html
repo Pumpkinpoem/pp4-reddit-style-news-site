@@ -1,10 +1,12 @@
 {% extends "news/base_generic.html" %}
 
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post" action="{% url 'account_signup' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
+<main role="main">
+    <h2 id="signup-heading">Sign Up</h2>
+    <form method="post" action="{% url 'account_signup' %}" aria-labelledby="signup-heading">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+    </form>
+</main>
 {% endblock %}

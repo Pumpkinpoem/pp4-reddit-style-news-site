@@ -2,19 +2,21 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h2>Update Post</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit">Update</button>
-</form>
-{% if post.image %}
-<div>
-    <img src="{{ post.image.url }}" alt="{{ post.title }}">
-    <form method="post" action="{% url 'delete_post_image' post.slug %}">
+<main role="main">
+    <h2 id="update-post-heading">Update Post</h2>
+    <form method="post" enctype="multipart/form-data" aria-labelledby="update-post-heading">
         {% csrf_token %}
-        <button type="submit">Delete Image</button>
+        {{ form|crispy }}
+        <button type="submit">Update</button>
     </form>
-</div>
-{% endif %}
+    {% if post.image %}
+    <div>
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        <form method="post" action="{% url 'delete_post_image' post.slug %}" aria-labelledby="update-post-heading">
+            {% csrf_token %}
+            <button type="submit">Delete Image</button>
+        </form>
+    </div>
+    {% endif %}
+</main>
 {% endblock %}

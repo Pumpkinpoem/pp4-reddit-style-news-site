@@ -3,13 +3,15 @@
 {% block title %}Logging Out{% endblock %}
 
 {% block content %}
-<div class="logout-container">
-    <div class="logout-message">
-        <p>Thank you for visiting our site. We hope to see you again soon!</p>
-        <form method="post" action="{% url 'account_logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="logout-button">Logout</button>
-        </form>
+<main role="main">
+    <div class="logout-container">
+        <div class="logout-message">
+            <p>Thank you for visiting our site. We hope to see you again soon!</p>
+            <form method="post" action="{% url 'account_logout' %}" aria-labelledby="logout-message">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
     </div>
-</div>
+</main>
 {% endblock %}

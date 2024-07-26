@@ -1,37 +1,60 @@
 {% extends 'news/base_generic.html' %}
 
 {% block content %}
-<div>
-    <form method="get">
-        <label for="category">Filter by Category:</label>
-        <select id="category" name="category" onchange="this.form.submit()">
-            <option value="">All Categories</option>
-            {% for category in categories %}
-            <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
-            {% endfor %}
-        </select>
+<main role="main">
+    <div>
+        <form method="get" aria-labelledby="filter-sort-form">
+            <fieldset>
+                <legend id="filter-sort-form">Filter and Sort Posts</legend>
+                <label for="category">Filter by Category:</label>
+                <select id="category" name="category" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
 
-        <label for="sort_by">Sort by:</label>
-        <select id="sort_by" name="sort_by" onchange="this.form.submit()">
-            <option value="time" {% if request.GET.sort_by == 'time' %}selected{% endif %}>Time</option>
-            <option value="popularity" {% if request.GET.sort_by == 'popularity' %}selected{% endif %}>Popularity</option>
-            <option value="category" {% if request.GET.sort_by == 'category' %}selected{% endif %}>Category</option>
-        </select>
-    </form>
-</div>
+                <label for="sort_by">Sort by:</label>
+                <select id="sort_by" name="sort_by" onchange="this.form.submit()">
+                    <option value="time" {% if request.GET.sort_by == 'time' %}selected{% endif %}>Time</option>
+                    <option value="popularity" {% if request.GET.sort_by == 'popularity' %}selected{% endif %}>Popularity</option>
+                    <option value="category" {% if request.GET.sort_by == 'category' %}selected{% endif %}>Category</option>
+                </select>
+            </fieldset>
+        </form>
+    </div>
 
-<ul>
-    {% for post in posts %}
-    <li class="post">
-        {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}">
-        {% endif %}
-        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
-        <p>{{ post.content|safe|truncatewords:30 }}</p>
-        <p>Category: {{ post.category.name }}</p>
-        <p>Author: {{ post.author.username }}</p>
-        <p>Posted on: {{ post.created_at }}</p>
-    </li>
-    {% endfor %}
-</ul>
+    <ul aria-live="polite">
+        {% for post in page_obj %}
+        <li class="post">
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            {% endif %}
+            <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+            <p>{{ post.content|safe|truncatewords:30 }}</p>
+            <p>Category: {{ post.category.name }}</p>
+            <p>Author: {{ post.author.username }}</p>
+            <p>Posted on: {{ post.created_at }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination" role="navigation" aria-label="Pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" aria-label="First page">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous page">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" aria-label="Next page">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last page">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</main>
 {% endblock %}

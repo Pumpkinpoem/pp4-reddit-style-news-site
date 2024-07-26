@@ -1,9 +1,15 @@
-{% extends "news/base_generic.html" %}
+{% extends "news/base_no_sidebars.html" %}
+
+{% block title %}Logging Out{% endblock %}
 
 {% block content %}
-<h2>Logout</h2>
-<form method="post" action="{% url 'account_logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-</form>
+<div class="logout-container">
+    <div class="logout-message">
+        <p>Thank you for visiting our site. We hope to see you again soon!</p>
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

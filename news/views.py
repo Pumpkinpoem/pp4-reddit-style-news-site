@@ -9,7 +9,9 @@ from django.db.models import Count
 
 # Home view
 def home(request):
-    return render(request, 'news/home.html')
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/home.html', {'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 # news index
 
@@ -17,23 +19,18 @@ def index(request):
     categories = Category.objects.all()
     category_id = request.GET.get('category')
     sort_by = request.GET.get('sort_by', 'time')
-
     if category_id:
         posts = Post.objects.filter(category_id=category_id)
     else:
         posts = Post.objects.all()
-
     if sort_by == 'popularity':
-        posts = posts.annotate(num_comments=Count('comment')).order_by('-num_comments', '-created_at')
+        posts = posts.annotate(num_comments=Count('comments')).order_by('-num_comments', '-created_at')
     elif sort_by == 'category':
         posts = posts.order_by('category', '-created_at')
     else:
         posts = posts.order_by('-created_at')
-
     popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
-
     latest_posts = Post.objects.order_by('-created_at')[:5]
-
     return render(request, 'news/index.html', {'posts': posts, 'categories': categories, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
@@ -47,7 +44,9 @@ def create_post(request):
             return redirect('index')
     else:
         form = PostForm()
-    return render(request, 'news/create_post.html', {'form': form})
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/create_post.html', {'form': form, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def edit_post(request, slug):
@@ -61,7 +60,9 @@ def edit_post(request, slug):
             return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
-    return render(request, 'news/post_form.html', {'form': form, 'post': post})
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/post_form.html', {'form': form, 'post': post, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def delete_post(request, slug):
@@ -71,7 +72,9 @@ def delete_post(request, slug):
     if request.method == 'POST':
         post.delete()
         return redirect('index')
-    return render(request, 'news/delete_post.html', {'post': post})
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/delete_post.html', {'post': post, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def delete_post_image(request, slug):
@@ -102,7 +105,9 @@ def post_detail(request, slug):
             return redirect('post_detail', slug=post.slug)
     else:
         form = CommentForm()
-    return render(request, 'news/post_detail.html', {'post': post, 'comments': comments, 'form': form})
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/post_detail.html', {'post': post, 'comments': comments, 'form': form, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def edit_comment(request, pk):
@@ -116,7 +121,9 @@ def edit_comment(request, pk):
             return redirect('post_detail', slug=comment.post.slug)
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'news/edit_comment.html', {'form': form, 'comment': comment})
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/edit_comment.html', {'form': form, 'comment': comment, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def delete_comment(request, pk):
@@ -127,7 +134,7 @@ def delete_comment(request, pk):
         post_slug = comment.post.slug
         comment.delete()
         return redirect('post_detail', slug=post_slug)
-    return render(request, 'news/delete_comment.html', {'comment': comment})
+    return render(request, 'news/delete_comment.html', {'comment': comment, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def upvote_post(request, slug):
@@ -161,12 +168,16 @@ def account_profile(request):
 
 @login_required
 def account_settings(request):
-    return render(request, 'news/account_settings.html')
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
+    return render(request, 'news/account_settings.html', {'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 #user account functions
 
 @login_required
 def change_password(request):
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -175,10 +186,12 @@ def change_password(request):
             return redirect('account_profile')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'account/change_password.html', {'form': form})
+    return render(request, 'account/change_password.html', {'form': form, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def change_username(request):
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
     if request.method == 'POST':
         form = ChangeUsernameForm(request.POST)
         if form.is_valid():
@@ -187,10 +200,12 @@ def change_username(request):
             return redirect('account_profile')
     else:
         form = ChangeUsernameForm(initial={'username': request.user.username})
-    return render(request, 'account/change_username.html', {'form': form})
+    return render(request, 'account/change_username.html', {'form': form, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def change_email(request):
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
     if request.method == 'POST':
         form = ChangeEmailForm(request.POST)
         if form.is_valid():
@@ -199,10 +214,12 @@ def change_email(request):
             return redirect('account_profile')
     else:
         form = ChangeEmailForm(initial={'email': request.user.email})
-    return render(request, 'account/change_email.html', {'form': form})
+    return render(request, 'account/change_email.html', {'form': form, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
 
 @login_required
 def delete_account(request):
+    popular_posts = Post.objects.annotate(num_upvotes=Count('upvotes')).order_by('-num_upvotes')[:5]
+    latest_posts = Post.objects.order_by('-created_at')[:5]
     if request.method == 'POST':
         form = DeleteAccountForm(request.POST)
         if form.is_valid():
@@ -210,6 +227,7 @@ def delete_account(request):
             return redirect('account_logout')
     else:
         form = DeleteAccountForm()
-    return render(request, 'account/delete_account.html', {'form': form})
+    return render(request, 'account/delete_account.html', {'form': form, 'popular_posts': popular_posts, 'latest_posts': latest_posts})
+
 
 

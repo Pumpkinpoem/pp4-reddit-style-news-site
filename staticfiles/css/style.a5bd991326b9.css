@@ -9,7 +9,7 @@
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     background-color: #FDEBD0; /* Light peach */
-    color: #5D5C61; /* Soft gray for text */
+    color: #5D5C61; /* stormy sky blue */
     line-height: 1.6;
     padding: 20px;
 }
@@ -30,7 +30,7 @@ header h1 {
 
 /* Navigation styling */
 nav a {
-    color: #5D5C61;
+    color: #5D5C61; /* stormy sky blue */
     text-decoration: none;
     padding: 10px 15px;
     font-size: 1.2em;
@@ -41,6 +41,39 @@ nav a:hover {
     color: white;
 }
 
+/* Footer styling  */
+.footer {
+    background-color: #ADD8E6; /* Light baby blue */
+    padding: 10px 0;
+    border-top: 2px solid #5D5C61; /* stormy sky blue */
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.footer .social-links {
+    margin: 10px 0;
+}
+
+.footer .social-links a {
+    color: #5D5C61; /* stormy sky blue */
+    margin: 0 10px;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.footer .social-links a:hover {
+    color: white;
+    background-color: #FF6347; /* Warm coral */
+    border-radius: 50%;
+}
+
+.footer p {
+    margin: 0;
+}
+
 /* Main container styling */
 .container {
     display: flex;
@@ -48,14 +81,11 @@ nav a:hover {
     margin: 0 auto;
 }
 
-
-
 /* Container for the main content and sidebar */
 .container {
     display: flex;
     justify-content: space-between;
 }
-
 
 /* Sidebar styling */
 .sidebar, .sidebar-right {
@@ -98,10 +128,45 @@ nav a:hover {
     text-decoration: underline;
 }
 
+/* Logout styling */
+.logout-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    padding: 20px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.logout-message {
+    background-color: #f9f9f9; /* Light background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    background-color: #FF6347; /* Warm coral */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Space above the button */
+}
+
+.logout-button:hover {
+    background-color: #E55347; /* Slightly darker coral */
+}
 
 /* Main content styling */
 main {
-    flex: 3;
+    flex: 3; 
     margin: 20px auto;
     padding: 20px;
     background-color: #FFF5EE; /* Light peach */
@@ -110,7 +175,6 @@ main {
     overflow: hidden;
     max-width: 100%;
 }
-
 
 .main-content {
     width: 70%;
@@ -136,6 +200,12 @@ main {
     margin-bottom: 10px;
 }
 
+.post img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
 
 .post-detail img {
     max-width: 100%;
@@ -162,8 +232,6 @@ button, .button {
 button:hover, .button:hover {
     background-color: #E55347; /* Slightly darker coral */
 }
-
-
 
 /* Additional styles for forms and layout */
 form {
@@ -223,15 +291,11 @@ li p:last-child {
     margin-bottom: 0;
 }
 
-
-
 /* Responsive design */
 @media (max-width: 1200px) {
     .container {
         width: 90%;
     }
-
-  
 }
 
 @media (max-width: 768px) {
@@ -267,4 +331,44 @@ li p:last-child {
     form label {
         margin: 15px 0 5px;
     }
+}
+
+/* Footer Alignment with Nav */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.footer .footer-container {
+    max-width: 1200px; /* Match main container width */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer .social-links {
+    margin-bottom: 10px;
+}
+
+.footer .social-links a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.footer .social-links a:hover {
+    color: #f9a825;
+}
+
+.footer p {
+    margin: 0;
 }

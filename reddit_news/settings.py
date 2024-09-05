@@ -19,6 +19,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import mimetypes
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,13 +34,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
-    '8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net',
+    '8000-pumpkinpoem-pp4redditst-kzqhlrci0f3.ws.codeinstitute-ide.net',
     '.herokuapp.com',
     ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-pumpkinpoem-pp4redditst-1fhfjxk232f.ws.codeinstitute-ide.net'
+    'https://8000-pumpkinpoem-pp4redditst-kzqhlrci0f3.ws.codeinstitute-ide.net'
     ]
 
 # Application definition
@@ -107,13 +108,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'reddit_news.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Use DATABASE_URL from environment variables for your production database
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL')),
-    'default': dj_database_url.config(conn_max_age=600)
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'), 
+        conn_max_age=600
+    )
 }
+
+# For test environment, use SQLite in-memory database
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+
 
 
 # Password validation

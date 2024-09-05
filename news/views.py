@@ -51,7 +51,7 @@ def index(request):
 
     context = get_common_context()
     context.update({
-        'posts': posts,
+        'posts': page_obj,  # Make sure to pass the paginated posts
         'categories': categories,
         'page_obj': page_obj,
     })
@@ -66,50 +66,43 @@ def create_post(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            form.save_m2m()
             return redirect('index')
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = PostForm()
-
-    context = get_common_context()
-    context['form'] = form
-    return render(request, 'news/create_post.html', context)
+        form = PostForm()  # Initialize form in GET request
+    return render(request, 'news/create_post.html', {'form': form})
 
 
 @login_required
 def edit_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if post.author != request.user:
+    if request.user != post.author:
         return HttpResponseForbidden()
-
+    
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return redirect('post_detail', slug=post.slug)
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = PostForm(instance=post)
-
-    context = get_common_context()
-    context.update({
-        'form': form,
-        'post': post,
-    })
-    return render(request, 'news/post_form.html', context)
+        form = PostForm(instance=post)  # Initialize form in GET request
+    return render(request, 'news/edit_post.html', {'form': form})
 
 
 @login_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if post.author != request.user:
+    if request.user != post.author:
         return HttpResponseForbidden()
-
+    
     if request.method == 'POST':
         post.delete()
         return redirect('index')
-
-    context = get_common_context()
-    context['post'] = post
-    return render(request, 'news/delete_post.html', context)
+    return render(request, 'news/delete_post.html', {'post': post})
 
 
 @login_required
@@ -133,6 +126,7 @@ def post_detail(request, slug):
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('account_login')
+        
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -140,8 +134,10 @@ def post_detail(request, slug):
             comment.author = request.user
             comment.save()
             return redirect('post_detail', slug=post.slug)
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = CommentForm()
+        form = CommentForm()  # Initialize form in GET request
 
     context = get_common_context()
     context.update({
@@ -163,8 +159,10 @@ def edit_comment(request, pk):
         if form.is_valid():
             form.save()
             return redirect('post_detail', slug=comment.post.slug)
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = CommentForm(instance=comment)
+        form = CommentForm(instance=comment)  # Initialize form in GET request
 
     context = get_common_context()
     context.update({
@@ -195,10 +193,12 @@ def upvote_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.user in post.downvotes.all():
         post.downvotes.remove(request.user)
+    
     if request.user not in post.upvotes.all():
         post.upvotes.add(request.user)
     else:
         post.upvotes.remove(request.user)
+    
     return redirect('post_detail', slug=slug)
 
 
@@ -207,10 +207,12 @@ def downvote_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.user in post.upvotes.all():
         post.upvotes.remove(request.user)
+    
     if request.user not in post.downvotes.all():
         post.downvotes.add(request.user)
     else:
         post.downvotes.remove(request.user)
+    
     return redirect('post_detail', slug=slug)
 
 
@@ -234,8 +236,11 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)
             return redirect('account_profile')
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = PasswordChangeForm(request.user)
+        form = PasswordChangeForm(request.user)  # Initialize form in GET request
+    
     context['form'] = form
     return render(request, 'account/change_password.html', context)
 
@@ -249,8 +254,11 @@ def change_username(request):
             request.user.username = form.cleaned_data['username']
             request.user.save()
             return redirect('account_profile')
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = ChangeUsernameForm(initial={'username': request.user.username})
+        form = ChangeUsernameForm(initial={'username': request.user.username})  # Initialize form in GET request
+    
     context['form'] = form
     return render(request, 'account/change_username.html', context)
 
@@ -264,8 +272,11 @@ def change_email(request):
             request.user.email = form.cleaned_data['email']
             request.user.save()
             return redirect('account_profile')
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = ChangeEmailForm(initial={'email': request.user.email})
+        form = ChangeEmailForm(initial={'email': request.user.email})  # Initialize form in GET request
+    
     context['form'] = form
     return render(request, 'account/change_email.html', context)
 
@@ -278,7 +289,10 @@ def delete_account(request):
         if form.is_valid():
             request.user.delete()
             return redirect('account_logout')
+        else:
+            print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
-        form = DeleteAccountForm()
+        form = DeleteAccountForm()  # Initialize form in GET request
+    
     context['form'] = form
     return render(request, 'account/delete_account.html', context)

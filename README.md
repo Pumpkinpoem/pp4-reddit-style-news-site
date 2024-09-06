@@ -233,7 +233,7 @@ These tests ensure that:
 - **Views**: Ensure that the index page, post detail page, and post creation process work as expected.
 - **URLs**: Validate that URLs are correctly mapped to their expected view functions.
 
-[test results](/automation20test.PNG)
+[test results](/automation%20test.PNG)
 
 ## Manual Testing
 

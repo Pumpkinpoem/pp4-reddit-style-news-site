@@ -1,0 +1,32 @@
+{% extends 'news/base_generic.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Edit Post</h2>
+    
+    <!-- Display form errors, if any -->
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        <ul>
+          {% for field in form %}
+            {% if field.errors %}
+              <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <!-- Use form.as_p to display the form fields neatly -->
+      {{ form.as_p }}
+
+      <button type="submit" class="btn btn-primary">Update Post</button>
+    </form>
+
+    <!-- Optional link to go back without saving -->
+    <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-secondary mt-3">Cancel</a>
+  </div>
+{% endblock %}

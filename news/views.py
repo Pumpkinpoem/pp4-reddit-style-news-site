@@ -90,7 +90,7 @@ def edit_post(request, slug):
             print("Form errors:", form.errors)  # Only runs if form is invalid
     else:
         form = PostForm(instance=post)  # Initialize form in GET request
-    return render(request, 'news/edit_post.html', {'form': form})
+    return render(request, 'news/edit_post.html', {'form': form, 'post': post})
 
 
 @login_required
